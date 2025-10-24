@@ -19,16 +19,22 @@ class Queue {
   }
 
   getUnderlyingList() {
-    return this.first;
+    return this.convertToObject(this.first);
+  }
+
+  convertToObject(elem) {
+    if (elem === null) return null;
+    return {
+      value: elem.value,
+      next: this.convertToObject(elem.next)
+    }
   }
 
   enqueue(value) {
     const newElement = new ListNode(value);
     if (this.first === null) {
       this.first = newElement;
-    } else if (this.last === null) {
       this.last = newElement;
-      this.first.next = newElement;
     } else {
       this.last.next = newElement;
       this.last = newElement;
@@ -36,10 +42,10 @@ class Queue {
   }
 
   dequeue() {
-    if (this.first === null) return null;
+    if (this.first === null) return undefined;
     const value = this.first.value;
     this.first = this.first.next;
-    if (this.first === null) this.last === null;
+    if (this.first === null) this.last = null;
     return value;    
   }
 }
